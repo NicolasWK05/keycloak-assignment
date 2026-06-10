@@ -1,0 +1,44 @@
+version: "3.8"
+
+networks:
+  local_net:
+    driver: bridge
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy_proxy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      - local_net
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.6.3
+    container_name: keycloak_dev
+    environment:
+      - KC_BOOTSTRAP_ADMIN_USERNAME=admin
+      - KC_BOOTSTRAP_ADMIN_PASSWORD=admin
+      # Tell Keycloak it is behind a proxy and what its public URL is
+      - KC_PROXY_HEADERS=xforwarded
+      - KC_HOSTNAME=https://keycloak.local
+    command: start-dev
+    networks:
+      - local_net
+
+  frontend:
+    build: ./softwaresafety-web/
+    container_name: softwaresafety_web
+    restart: unless-stopped
+    networks:
+      - local_net
+
+volumes:
+  caddy_data:
+  caddy_config:

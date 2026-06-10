@@ -1,0 +1,7 @@
+keycloak.local {
+    reverse_proxy keycloak_dev:8080
+}
+
+softwaresafety.local {
+    reverse_proxy frontend:80
+}
