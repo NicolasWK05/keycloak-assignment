@@ -1,5 +1,5 @@
 import { Show } from "solid-js";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/authContext";
 
 export default function ProtectedRoute(props: any) {
   const auth = useAuth();

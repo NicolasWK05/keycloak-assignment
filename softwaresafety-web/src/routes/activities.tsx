@@ -1,5 +1,5 @@
 import { For } from "solid-js";
-import ProtectedRoute from "~/components/ProtectedRoute";
+import ProtectedRoute from "~/components/protectedRoute";
 
 const activities = [
   {

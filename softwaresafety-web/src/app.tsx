@@ -1,10 +1,9 @@
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-// import NavBar from "~/components/NavBar";
+import Navbar from "./components/navBar";
+import { AuthProvider } from "./context/authContext";
 import "./app.css";
-import Navbar from "~/components/NavBar";
-import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (

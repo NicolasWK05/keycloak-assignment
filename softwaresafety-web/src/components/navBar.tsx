@@ -1,6 +1,6 @@
 import { Show } from "solid-js";
 import { A } from "@solidjs/router";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/authContext";
 
 export default function Navbar() {
   const auth = useAuth();

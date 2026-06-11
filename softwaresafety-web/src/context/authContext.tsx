@@ -1,8 +1,20 @@
-import { createContext, useContext, createSignal, onMount } from "solid-js";
+import {
+  createContext,
+  useContext,
+  createSignal,
+  onMount,
+  Accessor,
+} from "solid-js";
+import Keycloak from "keycloak-js";
 
 import keycloak from "../lib/keycloak";
 
-const AuthContext = createContext();
+type AuthContextType = {
+  authenticated: Accessor<Boolean>;
+  keycloak: Keycloak;
+};
+
+const AuthContext = createContext<AuthContextType>();
 
 export function AuthProvider(props: any) {
   const [authenticated, setAuthenticated] = createSignal(false);
@@ -12,6 +24,9 @@ export function AuthProvider(props: any) {
       onLoad: "check-sso",
       pkceMethod: "S256",
     });
+
+    console.log("authenticated?", auth);
+    console.log("token", keycloak.token);
 
     setAuthenticated(auth);
   });
