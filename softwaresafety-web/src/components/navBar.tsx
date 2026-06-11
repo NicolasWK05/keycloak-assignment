@@ -6,11 +6,11 @@ export default function Navbar() {
   const auth = useAuth();
 
   return (
-    <nav class="bg-blue-900 text-white">
-      <div class="container mx-auto px-4 py-4 flex justify-between">
-        <div class="font-bold">Software Safety Sundhedscenter</div>
+    <nav class="bg-blue-900 text-white shadow">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <h1 class="font-bold text-lg">Software Safety Sundhedscenter</h1>
 
-        <div class="space-x-4">
+        <div class="flex items-center gap-4">
           <A href="/">Home</A>
 
           <Show when={auth.authenticated()}>
@@ -20,24 +20,37 @@ export default function Navbar() {
           <Show
             when={auth.authenticated()}
             fallback={
-              <>
-                <button onClick={() => auth.keycloak.login()}>Login</button>
+              <div class="flex gap-2">
+                {/* Exercise 1 */}
 
-                <button onClick={() => auth.keycloak.register()}>
-                  Register
+                <button
+                  class="bg-blue-600 px-3 py-1 rounded hover:bg-blue-500"
+                  onClick={auth.login}
+                >
+                  Login + MFA
                 </button>
-              </>
+
+                <button
+                  class="bg-green-600 px-3 py-1 rounded hover:bg-green-500"
+                  onClick={auth.register}
+                >
+                  Register + MFA
+                </button>
+              </div>
             }
           >
-            <button
-              onClick={() =>
-                auth.keycloak.logout({
-                  redirectUri: "https://softwaresafety.local",
-                })
-              }
-            >
-              Logout
-            </button>
+            <div class="flex items-center gap-3">
+              <span class="text-sm">
+                {auth.keycloak.tokenParsed?.preferred_username as string}
+              </span>
+
+              <button
+                class="bg-red-600 px-3 py-1 rounded hover:bg-red-500"
+                onClick={auth.logout}
+              >
+                Logout
+              </button>
+            </div>
           </Show>
         </div>
       </div>
